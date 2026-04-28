@@ -20,23 +20,7 @@ async function run() {
 run();
 
 function sendRequest(url, callback) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    const result = (JSON.parse(xhr.response));
-                    resolve(result);
-                } else {
-                    reject(new Error(`Request failed with status ${xhr.status}`));
-                }
-            }
-        };
-        xhr.onerror = () => reject(new Error("Network Error"));
-        xhr.send();
-    });
+    return fetch(url).then(response => response.json()).catch(error => console.log(error));
 }
 
 function reqsToMap(requisites) {
