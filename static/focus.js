@@ -20,7 +20,14 @@ async function run() {
 run();
 
 function sendRequest(url, callback) {
-    return fetch(url).then(response => response.json()).catch(error => console.log(error));
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .catch(error => console.log(error));
 }
 
 function reqsToMap(requisites) {
